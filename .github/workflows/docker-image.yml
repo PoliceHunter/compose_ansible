@@ -30,7 +30,7 @@ jobs:
       run: ls -la
 
     - name: Ansible Run Playbook
-      run: ansible-playbook ./compose_ansible/ansible_deploy.yml -i localhost, --connection=local #-i #Host
+      run: ansible-playbook ./ansible_deploy.yml -i localhost, --connection=local #-i #Host
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
