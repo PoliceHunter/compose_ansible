@@ -25,7 +25,7 @@ jobs:
           # SSH private key used to connect to the host
           private-key: ${{secrets.PRIVATE_KEY}}
           # SSH User to use when connecting to host
-          user: ${{secrets.USER}}
+          user: mdev
           # Custom content to write into hosts
           inventory: |
              [all]
