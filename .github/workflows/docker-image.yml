@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: appleboy/ssh-action@v0.0.7
         with:
-          host: ${{ secrets.IP_ADDRESS }}
-          username: mdev
+          host: 45.12.6.163
+          username: root
           port: 22
-          key: ${{ secrets.PRIVATE_KEY }}
-          script: touch /home/mdev/1.txt
+          key: ${{ secrets.PRIVATE_KEY_2 }}
+          script: touch /root/1.txt
 
 #       - name: Checkout Code
 #         uses: actions/checkout@v2
