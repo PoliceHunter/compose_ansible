@@ -35,7 +35,9 @@ jobs:
           # SSH User to use when connecting to host
           user: mdev
           # Custom content to write into hosts
-          inventory: ./inventory.yml
+          inventory: |
+            [remote_host]
+            148.251.4.54          
           #vault_password: # optional
             # Contents of SSH known_hosts file
           known_hosts: /home/runner/.ssh/known_hosts
