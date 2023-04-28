@@ -25,5 +25,8 @@ jobs:
           inventory: |
             [all]
             ${{ secrets.IP_ADDRESS }}
+            
+            [remote_host]
+            ${{ secrets.IP_ADDRESS }}
           # Optional, SSH known hosts file content
           known_hosts: .known_hosts
