@@ -7,15 +7,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
   run-playbooks:
     runs-on: ubuntu-latest
     
@@ -30,7 +21,7 @@ jobs:
       run: ls -la
 
     - name: Ansible Run Playbook
-      run: ansible-playbook ./ansible_deploy_apt.yml -i localhost, --connection=local #-i #Host
+      run: ansible-playbook ./ansible_deploy_apt.yml -i ${{ secrets.IP_ADDRESS }} #-i #Host
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
