@@ -16,20 +16,22 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+  run-playbooks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    
+    - name: Install Ansible
+      run: sudo apt-get update && sudo apt-get install ansible -y
 
-    - name: Ansible Lint
-  # You may pin to the exact commit or the version.
-  # uses: ansible/ansible-lint-action@912d1bf4240f503c2b7e50a6cacadd7df5c3dd82
-      uses: ansible/ansible-lint-action@v6.15.0
-      with:
-    # Specific path to lint instead of the default `.`. Multiple arguments are not supported and you will need to alter linter configuration to accommodate other use cases.
-        path: # optional, default is --show-relpath
-    # deprecated
-        args: # optional, default is
-    - name: Ansible CLI
-  # You may pin to the exact commit or the version.
-  # uses: tomasnorre/ansible-cli-client@bd08e0a19b445d0a2bc42877fdd7a2e9d632e8e3
+    - name: Ansible Run Playbook
       uses: tomasnorre/ansible-cli-client@0.0.2
       with:
-    # Command to execute
-        command: ansible-playbook ansible-deploy.yml # default is ansible-playbook
+        command: ansible-playbook ansible-deploy.yml -i #Host
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: false
+        ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
+        ANSIBLE_PRIVATE_KEY_FILE: ${{ secrets.PRIVATE_KEY }}
+
