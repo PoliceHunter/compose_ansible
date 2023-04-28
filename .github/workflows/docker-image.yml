@@ -9,13 +9,14 @@ jobs:
   run-playbooks:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
-    - name: Perform ansible playbook to deploy
-      uses: actions-ansible@v2
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.10
       with:
-        playbook: ./playbook.yml
-        inventory: ./inventory.yml
+        host: ${{ secrets.IP_ADDRESS }}
+        username: ${{ secrets.USERNAME }}
+        key : ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        script: touch test1.txt
     
 #       - name: Checkout Code
 #         uses: actions/checkout@v2
