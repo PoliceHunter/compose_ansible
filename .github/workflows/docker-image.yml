@@ -27,9 +27,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install ansible -y
 
     - name: Ansible Run Playbook
-      uses: tomasnorre/ansible-cli-client@0.0.2
-      with:
-        command: ansible-playbook compose_ansible/ansible-deploy.yml #-i #Host
+      run: ansible-playbook ansible-deploy.yml #-i #Host
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
