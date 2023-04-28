@@ -12,21 +12,55 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+      - name: Ansible Playwright
+  # You may pin to the exact commit or the version.
+  # uses: aimerib/ansible-playwright@06276a1dd2ac67b31187164a21463632077ffec0
+        uses: aimerib/ansible-playwright@v2.7.7
         with:
-        # Required, playbook filepath
           playbook: ./ansible_deploy_apt.yml
-          # Optional, directory where playbooks live
+          # Ansible Galaxy requirements filepath  
           directory: ./
-          # Optional, SSH private key
+          # SSH private key used to connect to the host
           key: ${{secrets.PRIVATE_KEY}}
-          # Optional, literal inventory file contents
+          # SSH private key used to connect to the host
+          private-key: ${{secrets.PRIVATE_KEY}}
+          # SSH User to use when connecting to host
+          user: ${{secrets.USER}}
+          # Custom content to write into hosts
           inventory: |
-            [all]
-            ${{ secrets.IP_ADDRESS }}
+             [all]
+             ${{ secrets.IP_ADDRESS }}
             
-            [remote_host]
-            ${{ secrets.IP_ADDRESS }}
-          # Optional, SSH known hosts file content
+             [remote_host]
+             ${{ secrets.IP_ADDRESS }}
+             
+          #./inventory.yml
+          #vault_password: # optional
+            # Contents of SSH known_hosts file
           known_hosts: .known_hosts
+          # Extra options that should be passed to ansible-playbook command
+          #options: # optional
+          # Set to "true" if root is required for running your playbook
+          #sudo: # optional
+          # Set to "true" if the Ansible output should not include colors (defaults to "false")
+          #no_color: # optional
+          
+          
+#       - name: Run playbook
+#         uses: dawidd6/action-ansible-playbook@v2
+#         with:
+#         # Required, playbook filepath
+#           playbook: ./ansible_deploy_apt.yml
+#           # Optional, directory where playbooks live
+#           directory: ./
+#           # Optional, SSH private key
+#           key: ${{secrets.PRIVATE_KEY}}
+#           # Optional, literal inventory file contents
+#           inventory: |
+#             [all]
+#             ${{ secrets.IP_ADDRESS }}
+            
+#             [remote_host]
+#             ${{ secrets.IP_ADDRESS }}
+#           # Optional, SSH known hosts file content
+#           known_hosts: .known_hosts
