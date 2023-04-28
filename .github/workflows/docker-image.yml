@@ -5,28 +5,22 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   run-playbooks:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: Setup SSH 
-      shell: bash
-      run: |
-         eval `ssh-agent -s`
-         mkdir -p /home/runner/.ssh/
-         touch /home/runner/.ssh/id_rsa
-         echo -e "${{secrets.PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-         chmod 700 /home/runner/.ssh/id_rsa
-         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.IP_ADDRESS}} >> /home/runner/.ssh/known_hosts
-    - name: Run ansible script
-      shell: bash 
-      run: |
-          service ssh status
-          cd infrastructure/ansible
-          cat setup-prod.yml
-          ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.USERNAME}} -i ./inventory.yml ./ansible_deploy_apt.yml
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+        # Required, playbook filepath
+          playbook: ansible_deploy_apt.yml
+          # Optional, directory where playbooks live
+          directory: ./
+          # Optional, SSH private key
+          key: ${{secrets.PRIVATE_KEY}}
+          # Optional, literal inventory file contents
+          inventory: |
+            [all]
+            ${{ secrets.IP_ADDRESS }}
+          # Optional, SSH known hosts file content
+          known_hosts: .known_hosts
