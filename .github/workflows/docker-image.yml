@@ -14,12 +14,18 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
     
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
     - name: Install Ansible
       run: sudo apt-get update && sudo apt-get install ansible -y
 
     - name: Ansible Run Playbook
-      run: ansible-playbook -i ./ansible_deploy_apt.yml -u ${{ secrets.USERNAME }} --private-key ${{ secrets.PRIVATE_KEY }}
+      run: ansible-playbook -i ./inventory.yml ./ansible_deploy_apt.yml
       env:
+        ANSIBLE_REMOTE_IP: ${{ IP_ADDRESS }}
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
         ANSIBLE_PRIVATE_KEY_FILE: ${{ secrets.PRIVATE_KEY }}

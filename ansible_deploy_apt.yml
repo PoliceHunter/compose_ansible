@@ -1,4 +1,5 @@
 - name: Deploy Docker Compose project
+  hosts: remote_host
   become: true
   vars:
     compose_project_dir: "./"

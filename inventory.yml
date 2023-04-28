@@ -1,0 +1,4 @@
+all:
+  hosts:
+    remote_host:
+      ansible_host: IP_ADDRESS
