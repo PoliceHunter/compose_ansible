@@ -11,22 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-   
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.0
+    - uses: actions/checkout@v3
       with:
-        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
-
-    - name: Install Ansible
-      run: sudo apt-get update && sudo apt-get install ansible -y
-
-    - name: Ansible Run Playbook
-      run: ansible-playbook -i ./inventory.yml ./ansible_deploy_apt.yml
-      env:
-        ANSIBLE_REMOTE_IP: ${{ secrets.IP_ADDRESS }}
-        ANSIBLE_HOST_KEY_CHECKING: false
-        ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
-        ANSIBLE_PRIVATE_KEY_FILE: ${{ secrets.PRIVATE_KEY }}
-
+          submodules: true
+          token: ${{secrets.REPO_TOKEN}}
+    - name: Setup SSH 
+      shell: bash
+      run: |
+         eval `ssh-agent -s`
+         mkdir -p /home/runner/.ssh/
+         touch /home/runner/.ssh/id_rsa
+         echo -e "${{secrets.PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+         chmod 700 /home/runner/.ssh/id_rsa
+         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.IP_ADDRESS}} >> /home/runner/.ssh/known_hosts
+    - name: Run ansible script
+      shell: bash 
+      run: |
+          service ssh status
+          cd infrastructure/ansible
+          cat setup-prod.yml
+          ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.USERNAME}} -i ./inventory.yml ./ansible_deploy_apt.yml
