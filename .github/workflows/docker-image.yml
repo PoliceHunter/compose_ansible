@@ -16,12 +16,9 @@ jobs:
     
     - name: Install Ansible
       run: sudo apt-get update && sudo apt-get install ansible -y
-    
-    - name: Check where i am
-      run: ls -la
 
     - name: Ansible Run Playbook
-      run: ansible-playbook ./ansible_deploy_apt.yml -i ${{ secrets.IP_ADDRESS }} #-i #Host
+      run: ansible-playbook -i ./ansible_deploy_apt.yml -u ${{ secrets.USERNAME }} --private-key ${{ secrets.PRIVATE_KEY }}
       env:
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_REMOTE_USER: ${{ secrets.USERNAME }}
