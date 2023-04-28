@@ -9,38 +9,46 @@ jobs:
   run-playbooks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Perform ansible playbook to deploy
+      uses: actions-ansible@v2
+      with:
+        playbook: ./playbook.yml
+        inventory: ./inventory.yml
+    
+#       - name: Checkout Code
+#         uses: actions/checkout@v2
       
-      - name: Setup SSH 
-        shell: bash
-        run: |
-         eval `ssh-agent -s`
-         mkdir -p /home/runner/.ssh/
-         touch /home/runner/.ssh/id_rsa
-         echo -e "${{secrets.PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-         chmod 700 /home/runner/.ssh/id_rsa
-         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.IP_ADDRESS}} >> /home/runner/.ssh/known_hosts
+#       - name: Setup SSH 
+#         shell: bash
+#         run: |
+#          eval `ssh-agent -s`
+#          mkdir -p /home/runner/.ssh/
+#          touch /home/runner/.ssh/id_rsa
+#          echo -e "${{secrets.PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+#          chmod 700 /home/runner/.ssh/id_rsa
+#          ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.IP_ADDRESS}} >> /home/runner/.ssh/known_hosts
 
-      - name: Ansible Playwright
-  # You may pin to the exact commit or the version.
-  # uses: aimerib/ansible-playwright@06276a1dd2ac67b31187164a21463632077ffec0
-        uses: aimerib/ansible-playwright@v2.7.7
-        with:
-          playbook: ./ansible_deploy_apt.yml
-          # Ansible Galaxy requirements filepath  
-          directory: ./
-          # SSH private key used to connect to the host
-          private-key: /home/runner/.ssh/id_rsa
-          # SSH User to use when connecting to host
-          user: mdev
-          # Custom content to write into hosts
-          inventory: |
-            [remote_host]
-            148.251.4.54          
+#       - name: Ansible Playwright
+#   # You may pin to the exact commit or the version.
+#   # uses: aimerib/ansible-playwright@06276a1dd2ac67b31187164a21463632077ffec0
+#         uses: aimerib/ansible-playwright@v2.7.7
+#         with:
+#           playbook: ./ansible_deploy_apt.yml
+#           # Ansible Galaxy requirements filepath  
+#           directory: ./
+#           # SSH private key used to connect to the host
+#           private-key: /home/runner/.ssh/id_rsa
+#           # SSH User to use when connecting to host
+#           user: mdev
+#           # Custom content to write into hosts
+#           inventory: |
+#             [remote_host]
+#             148.251.4.54          
           #vault_password: # optional
             # Contents of SSH known_hosts file
-          known_hosts: /home/runner/.ssh/known_hosts
+#           known_hosts: /home/runner/.ssh/known_hosts
           # Extra options that should be passed to ansible-playbook command
           #options: # optional
           # Set to "true" if root is required for running your playbook
