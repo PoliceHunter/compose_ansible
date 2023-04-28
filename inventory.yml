@@ -1,4 +1,4 @@
 all:
   hosts:
     remote_host:
-      ansible_host: IP_ADDRESS
+      ansible_host: 148.251.4.54
