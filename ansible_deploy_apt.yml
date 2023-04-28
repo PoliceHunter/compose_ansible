@@ -23,11 +23,15 @@
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
     - name: Install Docker Compose
-      command: >
-        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
-        -o /usr/local/bin/docker-compose && \
+      vars:
+        docker_compose_version: 1.29.2  
+      shell: |
+        curl -L "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-$(uname -s)-$(uname -m)" \
+          -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
-    # Сборка и запуск Docker Compose проекта
+      register: docker_compose_install
+      changed_when: docker_compose_install.stdout != ''
+          # Сборка и запуск Docker Compose проекта
     - name: Build and start Docker Compose project
       command: >
         docker-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build
