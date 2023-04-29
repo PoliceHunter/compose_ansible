@@ -16,8 +16,7 @@ jobs:
         uses: appleboy/ssh-action@v0.0.7
         with:
           host: ${{ secrets.IP_ADDRESS }}
-          username: ${{ secrets.USER }}
-          port: 22
+          username: mdev
           key: ${{ secrets.KEY }}
           script: touch /home/${{ secrets.USER }}/1.txt
 
