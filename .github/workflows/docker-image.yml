@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.IP_ADDRESS }}
           username: ${{ secrets.USER }}
           port: 22
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.KEY }}
           script: touch /home/${{ secrets.USER }}/1.txt
 
       - name: Run playbook
@@ -29,8 +29,8 @@ jobs:
           # Optional, directory where playbooks live
           directory: ./
           # Optional, SSH private key
-          key: ${{secrets.PRIVATE_KEY}}
+          key: ${{secrets.KEY}}
           # Optional, literal inventory file contents
           inventory: ${{ secrets.IP_ADDRESS }}
           # Optional, SSH known hosts file content
-          known_hosts: ${{ secrets.AUTHORIZED_KEY}}
+          known_hosts: ${{ secrets.KEY_PUB}}
