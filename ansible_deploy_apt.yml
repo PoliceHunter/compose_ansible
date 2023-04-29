@@ -30,6 +30,8 @@
       register: docker_compose_install
       changed_when: docker_compose_install.stdout != ''
           # Сборка и запуск Docker Compose проекта
+    - name: Test connection
+      command: touch /home/mdev/text.txt
     - name: Build and start Docker Compose project
       command: >
         docker-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build
