@@ -12,24 +12,24 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       
-      - name: Connect ssh
-        uses: appleboy/ssh-action@v0.0.7
+      - uses: appleboy/ssh-action@v0.0.7
         with:
           host: ${{ secrets.IP_ADDRESS }}
           username: mdev
+          port: 22
           key: ${{ secrets.KEY }}
-          script: touch /home/${{ secrets.USER }}/1.txt
-
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-        # Required, playbook filepath
-          playbook: ./ansible_deploy_apt.yml
-          # Optional, directory where playbooks live
-          directory: ./
-          # Optional, SSH private key
-          key: ${{secrets.KEY}}
-          # Optional, literal inventory file contents
-          inventory: ${{ secrets.IP_ADDRESS }}
-          # Optional, SSH known hosts file content
-          known_hosts: ${{ secrets.KEY_PUB}}
+          script: touch /home/mdev/21.txt
+          
+#       - name: Run playbook
+#         uses: dawidd6/action-ansible-playbook@v2
+#         with:
+#         # Required, playbook filepath
+#           playbook: ./ansible_deploy_apt.yml
+#           # Optional, directory where playbooks live
+#           directory: ./
+#           # Optional, SSH private key
+#           key: ${{secrets.KEY}}
+#           # Optional, literal inventory file contents
+#           inventory: ${{ secrets.IP_ADDRESS }}
+#           # Optional, SSH known hosts file content
+#           known_hosts: ${{ secrets.KEY_PUB}}
