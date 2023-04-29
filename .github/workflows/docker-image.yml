@@ -11,35 +11,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        
-      - name: Ansible Playwright
-        uses: aimerib/ansible-playwright@v2.7.7
+          
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
         with:
+        # Required, playbook filepath
           playbook: ./ansible_deploy_apt.yml
-          directory: ./        
-          private-key: ${{secrets.PRIVATE_KEY}}
-          user: ${{secrets.USER}}
+          # Optional, directory where playbooks live
+          directory: ./
+          # Optional, SSH private key
+          key: ${{secrets.PRIVATE_KEY}}
+          # Optional, literal inventory file contents
           inventory: |
-            [remote_host]
-            ${{secrets.IP_ADDRESS}}         
-          known_hosts: /home/runner/.ssh/known_hosts
-          
-          
-#       - name: Run playbook
-#         uses: dawidd6/action-ansible-playbook@v2
-#         with:
-#         # Required, playbook filepath
-#           playbook: ./ansible_deploy_apt.yml
-#           # Optional, directory where playbooks live
-#           directory: ./
-#           # Optional, SSH private key
-#           key: ${{secrets.PRIVATE_KEY}}
-#           # Optional, literal inventory file contents
-#           inventory: |
-#             [all]
-#             ${{ secrets.IP_ADDRESS }}
+            [all]
+            ${{ secrets.IP_ADDRESS }}
             
-#             [remote_host]
-#             ${{ secrets.IP_ADDRESS }}
-#           # Optional, SSH known hosts file content
-#           known_hosts: .known_hosts
+            [remote_host]
+            ${{ secrets.IP_ADDRESS }}
+          # Optional, SSH known hosts file content
+          known_hosts: ${{ secrets.PUB_KEY}}
