@@ -1,7 +1,5 @@
 - name: Deploy Docker Compose project
   hosts: remote_host
-  gather_facts: false
-  connection: local
   become: true
   vars:
     compose_project_dir: "./"
