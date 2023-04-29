@@ -22,8 +22,8 @@ jobs:
           # Optional, SSH private key
           key: ${{secrets.PRIVATE_KEY}}
           # Optional, literal inventory file contents
-          inventory: ./hosts
-#             [all]
-#             ${{ secrets.IP_ADDRESS }}
+          inventory: |
+            [all]
+            ${{ secrets.IP_ADDRESS }}
           # Optional, SSH known hosts file content
           known_hosts: ${{ secrets.PUB_KEY}}
