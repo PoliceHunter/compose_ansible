@@ -5,28 +5,6 @@
     compose_file: "docker-compose.yml"
     compose_project_name: "test_compose"
   tasks:
-    - name: Install Docker Engine
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg
-          - lsb-release
-        update_cache: yes
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-    - name: Install Docker Compose
-      vars:
-        docker_compose_version: 1.29.2  
-      shell: |
-        curl -L "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-$(uname -s)-$(uname -m)" \
-          -o /usr/local/bin/docker-compose
-        chmod +x /usr/local/bin/docker-compose
-      register: docker_compose_install
-      changed_when: docker_compose_install.stdout != ''
-          # Сборка и запуск Docker Compose проекта
     - name: Test connection
       command: pwd
     - name: Create test file on remote host
