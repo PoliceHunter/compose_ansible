@@ -11,7 +11,16 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-          
+      
+      - name: Connect ssh
+        uses: appleboy/ssh-action@v0.0.7
+        with:
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USER }}
+          port: 22
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: touch /home/${{ secrets.USER }}/1.txt
+
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
