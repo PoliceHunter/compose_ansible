@@ -32,6 +32,8 @@
           # Сборка и запуск Docker Compose проекта
     - name: Test connection
       command: pwd
+    - name: Create test file on remote host
+      command: touch test.txt
     - name: Build and start Docker Compose project
       command: >
         docker-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build
