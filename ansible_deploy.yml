@@ -1,7 +1,6 @@
 - name: Deploy Docker Compose project
   hosts: 127.0.0.1
   connection: local
-  become: true
   vars:
     compose_project_dir: "/home/danila/compose_ansible"
     compose_file: "docker-compose.yml"
@@ -10,7 +9,6 @@
     - name: Pull repository
       command: git pull
       
-
     - name: Buld and start Docker Compose project
       command: podman-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build    
       environment:
