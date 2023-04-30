@@ -14,7 +14,7 @@ post '/payload' do
 
   # Задаем файл инвентаризации и путь к плэйбуку
   #inventory = Ansible::Inventory::FilePathInventory.new('./hosts')
-  playbook_path = '/home/danila/compose_ansile/ansible_deploy.yml'
+  playbook_path = '/home/danila/compose_ansible/ansible_deploy.yml'
   result = system("ansible-playbook #{playbook_path}")
   # Переменные для ансибл при необходимости
   #playbook.exta_vars = { 'var1' => 'value1', '' => '' }
