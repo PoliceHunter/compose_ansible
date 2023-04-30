@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'ansible'
+require 'ansible-powerplay'
 
 get '/' do
   "Hello world"
