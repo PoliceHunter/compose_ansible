@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'json'
 require 'ansible'
-require 'ansible-powerplay'
 
 get '/' do
   "Hello world"
@@ -15,16 +14,14 @@ post '/payload' do
 
   # Задаем файл инвентаризации и путь к плэйбуку
   #inventory = Ansible::Inventory::FilePathInventory.new('./hosts')
-  playbook = ::Ansible::Playbook::Play.new(playbook: '/home/danila/compose_ansible/ansible_deploy.yml')
- 
+  playbook_path = '/home/danila/compose_ansile/ansible_deploy.yml'
+  result = system("ansible-playbook #{playbook_path}")
   # Переменные для ансибл при необходимости
   #playbook.exta_vars = { 'var1' => 'value1', '' => '' }
   #
   #
   #Run ansible 
-  result = playbook.run
-  puts result.to_json
-
+  
   # Возвращаем результаты Ansible в качестве ответа на запрос
-  result.to_json
+  { success: result }.to_json
 end
