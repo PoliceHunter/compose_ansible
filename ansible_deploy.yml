@@ -7,17 +7,9 @@
     compose_file: "docker-compose.yml"
     compose_project_name: "test_compose"
   tasks:
-    - name:
-      yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-        state: present
+    - name: Pull repository
+      command: git pull
 
-    - name: Install docker/podman engine
-      pip:
-        name:
-          - podman
-          - podman-compose
-        state: present
     - name: Buld and start Docker Compose project
       command: podman-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build    
       environment:
