@@ -9,6 +9,7 @@
   tasks:
     - name: Pull repository
       command: git pull
+      
 
     - name: Buld and start Docker Compose project
       command: podman-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build    
