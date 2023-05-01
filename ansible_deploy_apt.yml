@@ -5,8 +5,8 @@
     compose_file: "docker-compose.yml"
     compose_project_name: "test_compose"
   tasks:
-    - name: Test connection
-      command: pwd
+    - name: Test script hoooks
+      command: cat 123123
     - name: Build and start Docker Compose project
       command: >
         docker-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build
