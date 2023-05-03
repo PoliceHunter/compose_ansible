@@ -6,13 +6,9 @@
     compose_file: "docker-compose.yml"
     compose_project_name: "test_compose"
   tasks:
-    - name: Pull repository
-      command: git pull
-      
-    - name: Buld and start Docker Compose project
-      command: podman-compose -f {{ compose_project_dir }}/{{ compose_file }} -p {{ compose_project_name }} up -d --build    
-      environment:
-        PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-      args:
-        chdir: "{{ compose_project_dir }}"
+    - name: Запустить docker-compose
+      community.docker.docker_compose:
+        project_name: test_compose_podman
+        project_src: /home/danila/compose_ansible
+        state: present
 
