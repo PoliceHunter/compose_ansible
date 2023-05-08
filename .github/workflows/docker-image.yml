@@ -12,6 +12,11 @@
        - name: Checkout Code
          uses: actions/checkout@v2
          
+       - name: Setup SSH keys
+         uses: webfactory/ssh-agent@v0.4.1
+         with:
+          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
        - name: Clone repository on remote host
          run: |
               git remote add deploy ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
