@@ -13,5 +13,5 @@
          uses: actions/checkout@v2
          
        - name: Clone repository on remote host
-         run: git remote add deploy ${{ secrets.USER }}:${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
+         run: git remote add deploy ${{ secrets.USER }}:${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git | 
               git push bare master
