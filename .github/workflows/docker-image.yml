@@ -19,5 +19,8 @@
 
        - name: Clone repository on remote host
          run: |
+              ssh-keyscan -t rsa ${{ secrets.IP_ADDRESS }} >> ~/.ssh/known_hosts
               git remote add deploy ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
               git push deploy master
+         env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
