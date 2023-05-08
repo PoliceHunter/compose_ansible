@@ -1,49 +1,21 @@
 # name: Docker Image CI
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
-# jobs:
-#   run-playbooks:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
+ on:
+   push:
+     branches: [ "main" ]
+   pull_request:
+     branches: [ "main" ]
+ jobs:
+   run-playbooks:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout Code
+         uses: actions/checkout@v2
       
-#       - uses: appleboy/ssh-action@v0.0.7
-#         with:
-#           host: ${{ secrets.IP_ADDRESS }}
-#           username: mdev
-#           port: 22
-#           key: ${{ secrets.KEY }}
-#           script: pwd
-      
-#       - name: Ansible Playwright
-#         uses: aimerib/ansible-playwright@v2.7.7
-#         with:
-#           playbook: ./ansible_deploy_apt.yml
-#           directory: ./        
-#           private-key: ${{secrets.KEY}}
-#           user: ${{secrets.USER}}
-#           inventory: |
-#             [test]
-#             ${{secrets.IP_ADDRESS}}         
-#           known_hosts: ${{ secrets.KEY_PUB}}  #/home/runner/.ssh/known_hosts
-          
-#       - name: Run playbook
-#         uses: dawidd6/action-ansible-playbook@v2
-#         with:
-#         # Required, playbook filepath
-#           playbook: ./ansible_deploy_apt.yml
-#           # Optional, directory where playbooks live
-#           directory: ./
-#           # Optional, SSH private key
-#           key: ${{secrets.KEY}}
-#           # Optional, literal inventory file contents
-#           inventory: |
-#             [test]
-#             ${{ secrets.IP_ADDRESS }}
-#           # Optional, SSH known hosts file content
-#           #known_hosts: ${{ secrets.KEY_PUB}}
+       - uses: appleboy/ssh-action@v0.0.7
+         with:
+           host: ${{ secrets.IP_ADDRESS }}
+           username: mdev
+           port: 22
+           key: ${{ secrets.KEY }}
+           script: pwd
