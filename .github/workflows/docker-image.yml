@@ -14,5 +14,5 @@
          
        - name: Clone repository on remote host
          run: |
-              git remote add deploy ${{ secrets.USER }}@${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
+              git remote add deploy ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
               git push deploy master
