@@ -23,4 +23,4 @@
               git remote add deploy ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
               git push deploy master
          env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
