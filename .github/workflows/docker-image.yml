@@ -2,20 +2,16 @@
 
  on:
    push:
-     branches: [ "main" ]
+     branches: [ "master" ]
    pull_request:
-     branches: [ "main" ]
+     branches: [ "master" ]
  jobs:
    run-playbooks:
      runs-on: ubuntu-latest
      steps:
        - name: Checkout Code
          uses: actions/checkout@v2
-      
-       - uses: appleboy/ssh-action@v0.0.7
-         with:
-           host: ${{ secrets.IP_ADDRESS }}
-           username: mdev
-           port: 22
-           key: ${{ secrets.KEY }}
-           script: pwd
+         
+       - name: Clone repository on remote host
+         run: git remote add bare ${{ secrets.USER }}:${{ secrets.IP_ADDRESS }}:/home/mdev/server_git.git
+              git push bare master
